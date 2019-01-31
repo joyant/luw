@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LUW(look up words)</title>
+    <script src="http://lib.baomitu.com/jquery/2.2.4/jquery.min.js"></script>
+</head>
+<body>
+    <input style="padding:20px;" onkeyup="request(this)" placeholder="input"/>
+    <div>
+        <ul id="ul">
+        </ul>
+    </div>
+    <script>
+        function request(othis) {
+            othis = $(othis);
+            var val = othis.val();
+            if(val.length > 0) {
+                $.get("/word",{prefix:val},function (r) {
+                    if(r) {
+                        var arr = [];
+                        r.forEach(function (ele) {
+                            arr.push("<li>"+ele+"</li>");
+                        });
+                        $("#ul").html(arr.join(""));
+                    }else{
+
+                        $("#ul").html('');
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
